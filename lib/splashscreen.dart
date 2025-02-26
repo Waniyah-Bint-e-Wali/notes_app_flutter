@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app_flutter/main.dart';
+import 'package:notes_app_flutter/home_screen.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget{
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds:5),(){
       Navigator.pushReplacement(
           context, MaterialPageRoute(
-          builder: (context)=>MyHomePage()
+          builder: (context)=>HomeScreen()
       )
       );
     });
@@ -22,11 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+       backgroundColor: Colors.blue.shade300,
+      ),
         body:Container(
             color:Colors.blue.shade300,
                 child:Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(top:300),
+                    padding: const EdgeInsets.only(top:230),
                     child: Column(
                       children: [
                         Container(
@@ -36,9 +40,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
                         ),
                         Container(
-                          height:170,
+                          height:150,
                           width:200,
-                            child:Center(child: Text("Good Notes",style:TextStyle(fontSize:42,fontFamily:'FontMain',fontWeight:FontWeight.w500,color:Colors.white)))
+                            child:Center(child: Text(
+                                "Good Notes"
+                                ,style:TextStyle(
+                                fontSize:42,
+                                fontFamily:'FontMain',
+                                fontWeight:FontWeight.bold,
+                                color:Colors.black)))
                         )
                       ],
                     ),
