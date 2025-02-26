@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app_flutter/note.dart';
 
 class AddUpdateNote extends StatefulWidget {
   const AddUpdateNote({super.key});
@@ -8,6 +9,8 @@ class AddUpdateNote extends StatefulWidget {
 }
 
 class _AddUpdateNoteState extends State<AddUpdateNote> {
+  var titleText=TextEditingController();
+  var descriptionText=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +58,7 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       ],
                     ),
                     child: TextField(
+                      controller:titleText,
                       style:  TextStyle(
                       fontSize: 40,
                       fontFamily: 'FontMain',
@@ -92,10 +96,10 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       ],
                     ),
                     child: TextField(
+                      controller:descriptionText,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                         fontFamily: 'FontMain',
-                        fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
                       maxLines: null,
@@ -103,9 +107,8 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       decoration: InputDecoration(
                         hintText: "Description",
                         hintStyle: TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                         fontFamily: 'FontMain',
-                        fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
                         border: InputBorder.none,
@@ -122,9 +125,11 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
         padding: const EdgeInsets.only(bottom: 40, right: 150),
         child: FloatingActionButton(
           onPressed: () {
-
+           String title=titleText.text.toString();
+           String description=descriptionText.text.toString();
+           Navigator.pop(context, {'title': title, 'description': description});
           },
-          backgroundColor: Colors.green.shade200,
+          backgroundColor: Colors.orange.shade200,
           child: Icon(Icons.check, size: 45, color: Colors.black),
         ),
       ),
