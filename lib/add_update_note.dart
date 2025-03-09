@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app_flutter/note.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddUpdateNote extends StatefulWidget {
-  const AddUpdateNote({super.key});
+  final Note? note;
+  const AddUpdateNote({super.key, this.note});
 
   @override
   State<AddUpdateNote> createState() => _AddUpdateNoteState();
@@ -11,6 +13,12 @@ class AddUpdateNote extends StatefulWidget {
 class _AddUpdateNoteState extends State<AddUpdateNote> {
   var titleText=TextEditingController();
   var descriptionText=TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    titleText = TextEditingController(text: widget.note?.title ?? '');
+    descriptionText = TextEditingController(text: widget.note?.description ?? '');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +48,6 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
             color: Colors.blue.shade300,
             child: Column(
               children: [
-                // Title Input
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Container(
@@ -127,7 +134,20 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
           onPressed: () {
            String title=titleText.text.toString();
            String description=descriptionText.text.toString();
-           Navigator.pop(context, {'title': title, 'description': description});
+           if(title.isEmpty||description.isEmpty){
+             Fluttertoast.showToast(
+                 msg: "Please fill the fields",
+                 toastLength: Toast.LENGTH_LONG,
+                 gravity: ToastGravity.CENTER,
+                 timeInSecForIosWeb: 1,
+                 backgroundColor: Colors.green.shade100,
+                 textColor: Colors.black,
+                 fontSize: 25
+             );
+
+           }
+           else{Navigator.pop(context, Note(0, titleText.text, descriptionText.text));
+           }
           },
           backgroundColor: Colors.orange.shade200,
           child: Icon(Icons.check, size: 45, color: Colors.black),

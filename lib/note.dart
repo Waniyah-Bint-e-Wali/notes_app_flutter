@@ -11,3 +11,10 @@ Note noteFromJson(Map<String,dynamic>json){
     json["description"]
   );
 }
+Map<String,dynamic> tojson (Note note){
+  return {
+    'id':note.id,
+ 'title':note.title,
+ 'description' : note.description
+};
+}
