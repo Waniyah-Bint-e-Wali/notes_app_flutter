@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:notes_app_flutter/add_update_note.dart';
 import 'package:notes_app_flutter/note.dart';
-import 'package:notes_app_flutter/Database_service.dart';
+import 'package:notes_app_flutter/notes_provider.dart';
 import 'package:notes_app_flutter/View_note.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,20 +13,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final DatabaseService _databaseinstance = DatabaseService.instance;
-  List<Note> notes = [];
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    fetchnotes();
+    Provider.of<NotesProvider>(context, listen: false).getAllNotes();
   }
-  void fetchnotes() async {
-    final fetchedNotes = await _databaseinstance.getnotes();
-    setState(() {
-      notes = fetchedNotes;
-    });
-  }
-
 
   final List<Color> containerColors = [
     Colors.yellow.shade200,
@@ -36,15 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final noteProvider = Provider.of<NotesProvider>(context);
+    final notes = noteProvider.notes;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade300,
-        toolbarHeight: 100,
         title: Center(
           child: Text(
             "Good Notes",
             style: TextStyle(
-              fontSize: 40,
+              fontSize: 30,
               fontFamily: 'FontMain',
               fontWeight: FontWeight.w500,
               color: Colors.black,
@@ -55,33 +49,26 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         color: Colors.blue.shade300,
         child: notes.isEmpty
-      ? Center(
-      child: Text(
-        "No Notes Added",
-        style: TextStyle(fontSize: 25, color: Colors.black,fontFamily:'FontMain'),
-      ),
-    )
-        :
-        ListView.builder(
+            ? Center(
+          child: Text(
+            "No Notes Added",
+            style: TextStyle(fontSize: 25, color: Colors.black, fontFamily: 'FontMain'),
+          ),
+        )
+            : ListView.builder(
           itemCount: notes.length,
           itemBuilder: (context, index) {
             return CustomNoteCard(
-                color: containerColors[index % containerColors.length],
-                note: notes[index],
-                onEdit: (editedNote) {
-                  setState(() {
-                    notes[index] = editedNote;
-                  });
-                },
-                onDelete: ()async {
-
-                    await _databaseinstance.deletenotes(notes[index]);
-                    notes.removeAt(index);
-                    setState(() {
-                    });
-                }
-                  );
-          }
+              color: containerColors[index % containerColors.length],
+              note: notes[index],
+              onEdit: (editedNote) async {
+                await noteProvider.updateNote(editedNote);
+              },
+              onDelete: () async {
+                await noteProvider.deleteNote(notes[index]);
+              },
+            );
+          },
         ),
       ),
       floatingActionButton: Padding(
@@ -94,14 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
             );
 
             if (response != null && response is Note) {
-              int insertedId = await _databaseinstance.addnotes(response);
-              response.id = insertedId;
-              List<Note> allNotes = await _databaseinstance.getnotes();
-              setState(() {
-                notes = allNotes;
-              });
+              await noteProvider.addNote(response);
             }
-
           },
           backgroundColor: Colors.pink.shade200,
           child: Icon(Icons.add, size: 35, color: Colors.black),
@@ -116,17 +97,25 @@ class CustomNoteCard extends StatelessWidget {
   final Note note;
   final Function(Note) onEdit;
   final Function onDelete;
-  const CustomNoteCard({super.key, required this.color, required this.note, required this.onEdit,required this.onDelete});
+
+  const CustomNoteCard({
+    super.key,
+    required this.color,
+    required this.note,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
-        onTap:(){
+        onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ViewNoteScreen(note: note)));
+            context,
+            MaterialPageRoute(builder: (context) => ViewNoteScreen(note: note)),
+          );
         },
         child: Container(
           height: 150,
@@ -147,21 +136,26 @@ class CustomNoteCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 40,
+                fontSize: 25,
                 fontFamily: 'FontMain',
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
             ),
-            subtitle: Text(
-              note.description,
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.black,
+            subtitle: Container(
+              height: 70,
+              child: SingleChildScrollView(
+                child: Text(
+                  note.description,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
             leading: IconButton(
-              icon: Icon(Icons.edit, size: 30, color: Colors.black),
+              icon: Icon(Icons.edit, size: 25, color: Colors.black),
               onPressed: () async {
                 final editedNote = await Navigator.push(
                   context,
@@ -174,7 +168,7 @@ class CustomNoteCard extends StatelessWidget {
               },
             ),
             trailing: IconButton(
-              icon: Icon(Icons.delete, size: 30, color: Colors.black),
+              icon: Icon(Icons.delete, size: 25, color: Colors.black),
               onPressed: () {
                 onDelete();
               },

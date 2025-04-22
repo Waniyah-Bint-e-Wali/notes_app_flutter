@@ -24,12 +24,11 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade300,
-        toolbarHeight: 100,
         title: Center(
           child: Text(
             "Good Notes",
             style: TextStyle(
-              fontSize: 40,
+              fontSize: 30,
               fontFamily: 'FontMain',
               fontWeight: FontWeight.w500,
               color: Colors.black,
@@ -67,7 +66,7 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                     child: TextField(
                       controller:titleText,
                       style:  TextStyle(
-                      fontSize: 40,
+                      fontSize: 25,
                       fontFamily: 'FontMain',
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
@@ -75,10 +74,10 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       decoration: InputDecoration(
                         hintText: "Title",
                         hintStyle:  TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                         fontFamily: 'FontMain',
                         fontWeight: FontWeight.w400,
-                        color: Colors.black,
+                        color: Colors.black38,
                       ),
                         border: InputBorder.none,
                       ),
@@ -87,10 +86,10 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Container(
                     padding: EdgeInsets.all(10),
-                    height: 400,
+                    height: 300,
                     decoration: BoxDecoration(
                       color: Colors.pink.shade200,
                       borderRadius: BorderRadius.circular(20),
@@ -105,8 +104,7 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                     child: TextField(
                       controller:descriptionText,
                       style: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'FontMain',
+                        fontSize: 18,
                         color: Colors.black,
                       ),
                       maxLines: null,
@@ -114,9 +112,8 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       decoration: InputDecoration(
                         hintText: "Description",
                         hintStyle: TextStyle(
-                        fontSize: 25,
-                        fontFamily: 'FontMain',
-                        color: Colors.black,
+                        fontSize: 18,
+                        color: Colors.black38,
                       ),
                         border: InputBorder.none,
                       ),
@@ -142,7 +139,7 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                  timeInSecForIosWeb: 1,
                  backgroundColor: Colors.green.shade100,
                  textColor: Colors.black,
-                 fontSize: 25
+                 fontSize: 18
              );
 
            }

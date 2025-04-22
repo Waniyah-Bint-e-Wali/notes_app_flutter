@@ -34,9 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height:200,
-                          width:200,
-                          child:Image.asset("assets/images/notes 6.png")
+                          height:80,
+                          width:80,
+                          child:Image.asset("assets/images/notes.png")
 
                         ),
                         Container(
@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             child:Center(child: Text(
                                 "Good Notes"
                                 ,style:TextStyle(
-                                fontSize:42,
+                                fontSize:30,
                                 fontFamily:'FontMain',
                                 fontWeight:FontWeight.bold,
                                 color:Colors.black)))

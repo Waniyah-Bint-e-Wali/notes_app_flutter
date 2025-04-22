@@ -9,14 +9,14 @@ class ViewNoteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.blue.shade300,
       appBar: AppBar(
         backgroundColor: Colors.blue.shade300,
-        toolbarHeight: 100,
         title: Center(
           child: Text(
             "Good Notes",
             style: TextStyle(
-              fontSize: 40,
+              fontSize: 30,
               fontFamily: 'FontMain',
               fontWeight: FontWeight.w500,
               color: Colors.black,
@@ -25,13 +25,12 @@ class ViewNoteScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        height:double.infinity,
+        height:500,
         width:double.infinity,
         color: Colors.blue.shade300,
         padding: EdgeInsets.all(20),
         child: Container(
                 padding: EdgeInsets.all(10),
-                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.yellow.shade200,
                   borderRadius: BorderRadius.circular(20),
@@ -41,18 +40,20 @@ class ViewNoteScreen extends StatelessWidget {
                   blurRadius: 5,
                   offset: Offset(2, 2),
                 ),] ),
-          child: Column(
-            children: [
-              Text(
-                note.title,
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-              SizedBox(height: 20),
-              Text(
-                note.description,
-                style: TextStyle(fontSize: 25, color: Colors.black),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text(
+                  note.title,
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  note.description,
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                ),
+              ],
+            ),
           ),
 
 
