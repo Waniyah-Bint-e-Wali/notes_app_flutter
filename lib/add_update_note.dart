@@ -11,14 +11,16 @@ class AddUpdateNote extends StatefulWidget {
 }
 
 class _AddUpdateNoteState extends State<AddUpdateNote> {
-  var titleText=TextEditingController();
-  var descriptionText=TextEditingController();
+  var titleText = TextEditingController();
+  var descriptionText = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     titleText = TextEditingController(text: widget.note?.title ?? '');
     descriptionText = TextEditingController(text: widget.note?.description ?? '');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,27 +66,26 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       ],
                     ),
                     child: TextField(
-                      controller:titleText,
-                      style:  TextStyle(
-                      fontSize: 25,
-                      fontFamily: 'FontMain',
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                      decoration: InputDecoration(
-                        hintText: "Title",
-                        hintStyle:  TextStyle(
+                      controller: titleText,
+                      style: TextStyle(
                         fontSize: 25,
                         fontFamily: 'FontMain',
                         fontWeight: FontWeight.w400,
-                        color: Colors.black38,
+                        color: Colors.black,
                       ),
+                      decoration: InputDecoration(
+                        hintText: "Title",
+                        hintStyle: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'FontMain',
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black38,
+                        ),
                         border: InputBorder.none,
                       ),
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                   child: Container(
@@ -102,7 +103,7 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       ],
                     ),
                     child: TextField(
-                      controller:descriptionText,
+                      controller: descriptionText,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -112,9 +113,9 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
                       decoration: InputDecoration(
                         hintText: "Description",
                         hintStyle: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black38,
-                      ),
+                          fontSize: 18,
+                          color: Colors.black38,
+                        ),
                         border: InputBorder.none,
                       ),
                     ),
@@ -129,22 +130,23 @@ class _AddUpdateNoteState extends State<AddUpdateNote> {
         padding: const EdgeInsets.only(bottom: 40, right: 150),
         child: FloatingActionButton(
           onPressed: () {
-           String title=titleText.text.toString();
-           String description=descriptionText.text.toString();
-           if(title.isEmpty||description.isEmpty){
-             Fluttertoast.showToast(
-                 msg: "Please fill the fields",
-                 toastLength: Toast.LENGTH_LONG,
-                 gravity: ToastGravity.CENTER,
-                 timeInSecForIosWeb: 1,
-                 backgroundColor: Colors.green.shade100,
-                 textColor: Colors.black,
-                 fontSize: 18
-             );
+            String title = titleText.text.trim();
+            String description = descriptionText.text.trim();
 
-           }
-           else{Navigator.pop(context, Note(0, titleText.text, descriptionText.text));
-           }
+            if (title.isEmpty || description.isEmpty) {
+              Fluttertoast.showToast(
+                msg: "Please fill the fields",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green.shade100,
+                textColor: Colors.black,
+                fontSize: 18,
+              );
+            } else {
+              int noteId = widget.note?.id ?? 0;
+              Navigator.pop(context, Note(noteId, title, description));
+            }
           },
           backgroundColor: Colors.orange.shade200,
           child: Icon(Icons.check, size: 45, color: Colors.black),
