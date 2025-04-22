@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app_flutter/note.dart';
+import 'package:notes_app_flutter/models/note.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddUpdateNote extends StatefulWidget {

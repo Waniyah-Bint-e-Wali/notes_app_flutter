@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:notes_app_flutter/note.dart';
-import 'package:notes_app_flutter/home_screen.dart';
+import 'package:notes_app_flutter/models/note.dart';
+import 'package:notes_app_flutter/views/home_screen.dart';
 
 class DatabaseService{
   static Database? _db;

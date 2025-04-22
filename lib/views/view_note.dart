@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app_flutter/note.dart';
+import 'package:notes_app_flutter/models/note.dart';
 
 class ViewNoteScreen extends StatelessWidget {
   final Note note;
